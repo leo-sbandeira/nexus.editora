@@ -67,7 +67,8 @@ Vercel (vercel.com → Add New → Project), configurar as variáveis de ambient
 do passo 2, e o deploy acontece automaticamente a cada push.
 
 Depois, em **Project Settings → Domains** na Vercel, adicione o domínio
-próprio registrado para a editora.
+`nexuseditoradigital.com.br` (registrado no Registro.br) e siga as instruções
+de DNS mostradas pela própria Vercel.
 
 ## Como funcionam os contadores
 

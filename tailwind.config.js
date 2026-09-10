@@ -7,16 +7,16 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        ink: "#0a0a0a",
-        paper: "#f2ecdd",
-        parchment: "#e8dfc9",
-        gold: "#b4832a",
-        wine: "#6b2737",
-        graphite: "#57534a",
+        azul: "#0a4b74",
+        "azul-escuro": "#073752",
+        cinza: "#b1b2b3",
+        "cinza-claro": "#e7e8e8",
+        preto: "#0a0a0a",
+        branco: "#ffffff",
       },
       fontFamily: {
-        serif: ["var(--font-serif)", "serif"],
-        sans: ["var(--font-sans)", "sans-serif"],
+        display: ["var(--font-nexus)", "sans-serif"],
+        sans: ["var(--font-nexus)", "sans-serif"],
       },
       borderRadius: {
         none: "0px",

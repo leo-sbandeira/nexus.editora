@@ -1,21 +1,17 @@
-import { Lora, Manrope } from "next/font/google";
+import { Poppins } from "next/font/google";
 import Link from "next/link";
 import Image from "next/image";
 import "./globals.css";
 
-const serif = Lora({
+const nexus = Poppins({
   subsets: ["latin"],
-  variable: "--font-serif",
-  display: "swap",
-});
-
-const sans = Manrope({
-  subsets: ["latin"],
-  variable: "--font-sans",
+  weight: ["400", "500", "600", "700", "800"],
+  variable: "--font-nexus",
   display: "swap",
 });
 
 export const metadata = {
+  metadataBase: new URL("https://nexuseditoradigital.com.br"),
   title: "Nexus Editora",
   description:
     "Obras publicadas pela Nexus Editora, disponíveis gratuitamente em PDF.",
@@ -23,23 +19,29 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="pt-BR" className={`${serif.variable} ${sans.variable}`}>
-      <body className="font-sans flex min-h-screen flex-col">
-        <header className="border-b border-ink/15">
-          <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-5">
-            <Link href="/" className="flex items-center gap-3">
+    <html lang="pt-BR" className={nexus.variable}>
+      <body className="flex min-h-screen flex-col font-sans text-preto">
+        <header className="bg-azul">
+          <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-6">
+            <Link href="/" className="flex items-center">
               <Image
-                src="/images/logo-preto.png"
+                src="/images/logo-branco-transparente.png"
                 alt="Nexus Editora"
-                width={140}
-                height={54}
+                width={280}
+                height={118}
                 priority
-                className="h-9 w-auto"
+                className="h-14 w-auto sm:h-16"
               />
             </Link>
-            <nav className="font-sans text-sm tracking-wide text-graphite">
-              <Link href="/" className="hover:text-ink">
-                Catálogo
+            <nav className="flex items-center gap-6 text-sm font-medium tracking-wide text-branco/90">
+              <Link href="/" className="transition-colors hover:text-branco">
+                Página Inicial
+              </Link>
+              <Link
+                href="/sobre"
+                className="transition-colors hover:text-branco"
+              >
+                Sobre a Editora
               </Link>
             </nav>
           </div>
@@ -47,12 +49,16 @@ export default function RootLayout({ children }) {
 
         <main className="flex-1">{children}</main>
 
-        <footer className="border-t border-ink/15">
-          <div className="mx-auto max-w-5xl px-6 py-8 text-sm text-graphite">
-            <p>
-              Nexus Editora — obras publicadas gratuitamente em formato
-              digital.
-            </p>
+        <footer className="bg-preto">
+          <div className="mx-auto max-w-5xl px-6 py-10 text-center text-sm text-cinza">
+            <p className="font-semibold text-branco">Nexus Editora</p>
+            <p className="mt-1">Palmas, Tocantins, Brasil</p>
+            <a
+              href="mailto:nexus.palmas@gmail.com"
+              className="mt-1 inline-block text-cinza transition-colors hover:text-branco"
+            >
+              nexus.palmas@gmail.com
+            </a>
           </div>
         </footer>
       </body>

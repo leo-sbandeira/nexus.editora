@@ -27,55 +27,59 @@ export default async function PaginaLivro({ params }) {
   ]);
 
   return (
-    <div className="mx-auto max-w-5xl px-6 py-14">
-      <div className="grid gap-10 sm:grid-cols-[240px_1fr]">
-        <div className="relative aspect-[3/4] w-full border border-ink/20 bg-parchment">
-          {livro.capa_url ? (
-            <Image
-              src={livro.capa_url}
-              alt={`Capa de ${livro.titulo}`}
-              fill
-              sizes="240px"
-              className="object-cover"
-            />
-          ) : (
-            <div className="flex h-full items-center justify-center p-4 text-center font-serif text-lg text-graphite">
+    <div>
+      <div className="mx-auto max-w-5xl px-6 py-14">
+        <div className="grid gap-10 sm:grid-cols-[240px_1fr]">
+          <div className="relative aspect-[3/4] w-full border border-cinza bg-cinza-claro">
+            {livro.capa_url ? (
+              <Image
+                src={livro.capa_url}
+                alt={`Capa de ${livro.titulo}`}
+                fill
+                sizes="240px"
+                className="object-cover"
+              />
+            ) : (
+              <div className="flex h-full items-center justify-center p-4 text-center text-sm font-medium text-preto/60">
+                {livro.titulo}
+              </div>
+            )}
+          </div>
+
+          <div>
+            <h1 className="text-3xl font-semibold text-azul sm:text-4xl">
               {livro.titulo}
-            </div>
-          )}
-        </div>
+            </h1>
+            <p className="mt-2 text-preto/60">
+              {[livro.autor, livro.ano].filter(Boolean).join(" · ")}
+            </p>
+            {livro.descricao && (
+              <p className="mt-5 max-w-xl text-preto/80">{livro.descricao}</p>
+            )}
 
-        <div>
-          <h1 className="font-serif text-3xl text-ink sm:text-4xl">
-            {livro.titulo}
-          </h1>
-          {livro.autor && (
-            <p className="mt-2 text-graphite">{livro.autor}</p>
-          )}
-          {livro.descricao && (
-            <p className="mt-5 max-w-xl text-ink/90">{livro.descricao}</p>
-          )}
-
-          <a
-            href={`/api/download?slug=${encodeURIComponent(livro.slug)}`}
-            className="mt-7 inline-block border border-ink bg-ink px-6 py-3 font-sans text-sm tracking-wide text-paper transition-colors hover:bg-wine hover:border-wine"
-          >
-            Baixar PDF gratuitamente
-          </a>
+            <a
+              href={`/api/download?slug=${encodeURIComponent(livro.slug)}`}
+              className="mt-7 inline-block bg-azul px-6 py-3 text-sm font-medium tracking-wide text-branco transition-colors hover:bg-azul-escuro"
+            >
+              Baixar PDF gratuitamente
+            </a>
+          </div>
         </div>
       </div>
 
-      <section className="mt-14 border-t border-ink/15 pt-10">
-        <div className="grid grid-cols-2 gap-6 sm:w-fit sm:grid-cols-2">
-          <NumeroDestaque valor={totais.visualizacoes} rotulo="visualizações" />
-          <NumeroDestaque valor={totais.downloads} rotulo="downloads" />
-        </div>
+      <section className="bg-cinza-claro">
+        <div className="mx-auto max-w-5xl px-6 py-12">
+          <div className="grid w-fit grid-cols-2 gap-8">
+            <NumeroDestaque valor={totais.visualizacoes} rotulo="visualizações" />
+            <NumeroDestaque valor={totais.downloads} rotulo="downloads" />
+          </div>
 
-        <h2 className="mt-10 font-serif text-xl text-ink">
-          Acessos por mês
-        </h2>
-        <div className="mt-4">
-          <GraficoMensal dados={dadosMensais} />
+          <h2 className="mt-10 text-xl font-semibold text-azul">
+            Acessos por mês
+          </h2>
+          <div className="mt-4">
+            <GraficoMensal dados={dadosMensais} />
+          </div>
         </div>
       </section>
     </div>

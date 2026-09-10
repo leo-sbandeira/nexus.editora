@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 ::selection {
-  background-color: #b4832a;
-  color: #f2ecdd;
+  background-color: #0a4b74;
+  color: #ffffff;
 }
 
 html {
@@ -12,12 +12,12 @@ html {
 }
 
 body {
-  background-color: #f2ecdd;
+  background-color: #ffffff;
   color: #0a0a0a;
 }
 
 a:focus-visible,
 button:focus-visible {
-  outline: 2px solid #6b2737;
+  outline: 2px solid #0a4b74;
   outline-offset: 3px;
 }

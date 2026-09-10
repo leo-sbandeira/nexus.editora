@@ -7,6 +7,7 @@ create table if not exists livros (
   slug text unique not null,
   titulo text not null,
   autor text,
+  ano smallint,
   descricao text,
   capa_url text,
   arquivo_url text not null,
