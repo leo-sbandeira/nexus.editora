@@ -22,20 +22,26 @@ export default function RootLayout({ children }) {
     <html lang="pt-BR" className={nexus.variable}>
       <body className="flex min-h-screen flex-col font-sans text-preto">
         <header className="bg-azul">
-          <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-6">
+          <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-5">
             <Link href="/" className="flex items-center">
               <Image
                 src="/images/logo-branco-transparente.png"
                 alt="Nexus Editora"
-                width={280}
-                height={118}
+                width={360}
+                height={152}
                 priority
-                className="h-14 w-auto sm:h-16"
+                className="h-24 w-auto sm:h-28"
               />
             </Link>
             <nav className="flex items-center gap-6 text-sm font-medium tracking-wide text-branco/90">
               <Link href="/" className="transition-colors hover:text-branco">
                 Página Inicial
+              </Link>
+              <Link
+                href="/catalogo"
+                className="transition-colors hover:text-branco"
+              >
+                Catálogo
               </Link>
               <Link
                 href="/sobre"
@@ -49,13 +55,13 @@ export default function RootLayout({ children }) {
 
         <main className="flex-1">{children}</main>
 
-        <footer className="bg-preto">
-          <div className="mx-auto max-w-5xl px-6 py-10 text-center text-sm text-cinza">
+        <footer className="bg-azul-escuro">
+          <div className="mx-auto max-w-5xl px-6 py-10 text-center text-sm text-branco/70">
             <p className="font-semibold text-branco">Nexus Editora</p>
             <p className="mt-1">Palmas, Tocantins, Brasil</p>
             <a
               href="mailto:nexus.palmas@gmail.com"
-              className="mt-1 inline-block text-cinza transition-colors hover:text-branco"
+              className="mt-1 inline-block text-branco/70 transition-colors hover:text-branco"
             >
               nexus.palmas@gmail.com
             </a>

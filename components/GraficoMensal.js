@@ -15,16 +15,16 @@ export default function GraficoMensal({ dados }) {
     <div className="h-64 w-full">
       <ResponsiveContainer width="100%" height="100%">
         <BarChart data={dados} margin={{ top: 8, right: 8, left: -16, bottom: 0 }}>
-          <CartesianGrid strokeDasharray="3 3" stroke="#0a0a0a15" vertical={false} />
+          <CartesianGrid strokeDasharray="3 3" stroke="#0a4b7420" vertical={false} />
           <XAxis
             dataKey="mes"
-            tick={{ fill: "#0a0a0a99", fontSize: 12 }}
-            axisLine={{ stroke: "#0a0a0a25" }}
+            tick={{ fill: "#0a4b7499", fontSize: 12 }}
+            axisLine={{ stroke: "#0a4b7440" }}
             tickLine={false}
           />
           <YAxis
             allowDecimals={false}
-            tick={{ fill: "#0a0a0a99", fontSize: 12 }}
+            tick={{ fill: "#0a4b7499", fontSize: 12 }}
             axisLine={false}
             tickLine={false}
             width={32}

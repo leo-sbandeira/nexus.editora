@@ -8,6 +8,7 @@ import {
 } from "@/lib/livros";
 import NumeroDestaque from "@/components/NumeroDestaque";
 import GraficoMensal from "@/components/GraficoMensal";
+import Citacao from "@/components/Citacao";
 
 export const revalidate = 0;
 
@@ -63,6 +64,13 @@ export default async function PaginaLivro({ params }) {
             >
               Baixar PDF gratuitamente
             </a>
+          </div>
+        </div>
+
+        <div className="mt-14">
+          <h2 className="text-xl font-semibold text-azul">Como citar</h2>
+          <div className="mt-4">
+            <Citacao livro={livro} />
           </div>
         </div>
       </div>

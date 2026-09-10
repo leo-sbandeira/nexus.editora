@@ -5,10 +5,10 @@ contadores públicos de visualizações e downloads (total e por mês).
 
 ## Stack
 
-- **Next.js** (App Router) — site e rotas de API
-- **Supabase** — banco de dados (Postgres) com os contadores e o catálogo
-- **Vercel** — hospedagem e deploy automático a cada push no GitHub
-- **Tailwind CSS** + **Recharts** — estilo e gráfico mensal
+- **Next.js** (App Router), site e rotas de API
+- **Supabase**, banco de dados (Postgres) com os contadores e o catálogo
+- **Vercel**, hospedagem e deploy automático a cada push no GitHub
+- **Tailwind CSS** + **Recharts**, estilo e gráfico mensal
 
 ## 1. Criar o projeto no Supabase
 
@@ -44,7 +44,7 @@ Por enquanto o cadastro é feito direto no Supabase (**Table editor → livros
 | `titulo`      | título do livro                                         |
 | `autor`       | nome do autor (opcional)                                |
 | `descricao`   | resumo curto (opcional)                                 |
-| `capa_url`    | link da imagem de capa (opcional — sem ela, mostra o título) |
+| `capa_url`    | link da imagem de capa (opcional, sem ela, mostra o título) |
 | `arquivo_url` | link direto do PDF (ex: um arquivo no Supabase Storage) |
 
 Para hospedar os PDFs: em **Storage**, crie um bucket público (ex:
