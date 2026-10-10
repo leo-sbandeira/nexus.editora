@@ -78,3 +78,14 @@ de DNS mostradas pela própria Vercel.
   uma linha em `downloads` e só então redireciona para o arquivo.
 - Os totais e o gráfico mensal (últimos 6 meses) são calculados a partir
   dessas duas tabelas, em tempo real, a cada carregamento da página.
+
+## Atualização da Fase 1 (coleções, autores e ficha técnica)
+
+Antes de publicar esta versão, execute no Supabase (SQL Editor) o arquivo
+[`supabase/migracao_fase1.sql`](./supabase/migracao_fase1.sql). Ele cria as
+tabelas `colecoes`, `autores` e `livros_autores`, os campos de ficha técnica
+em `livros` (ISBN, DOI, páginas, edição, licença, sinopse, sumário, rascunho)
+e a visão `livros_estatisticas`. Os dados existentes são preservados.
+
+Para esconder uma obra do site enquanto ela não está pronta, deixe
+`publicado = false` na linha dela.

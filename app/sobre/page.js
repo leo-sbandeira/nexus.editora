@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "Sobre a Editora · Nexus Editora",
+  title: "Sobre a Editora",
 };
 
 export default function Sobre() {
