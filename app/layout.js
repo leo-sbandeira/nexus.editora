@@ -1,6 +1,7 @@
 import { Poppins } from "next/font/google";
 import Link from "next/link";
-import Image from "next/image";
+import Cabecalho from "@/components/Cabecalho";
+import BarraAcessibilidade from "@/components/BarraAcessibilidade";
 import "./globals.css";
 
 const nexus = Poppins({
@@ -12,56 +13,45 @@ const nexus = Poppins({
 
 export const metadata = {
   metadataBase: new URL("https://nexuseditoradigital.com.br"),
-  title: "Nexus Editora",
+  title: {
+    default: "Nexus Editora",
+    template: "%s · Nexus Editora",
+  },
   description:
-    "Obras publicadas pela Nexus Editora, disponíveis gratuitamente em PDF.",
+    "Livros publicados pela Nexus Editora, disponíveis gratuitamente em PDF.",
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="pt-BR" className={nexus.variable}>
       <body className="flex min-h-screen flex-col font-sans text-preto">
-        <header className="bg-azul">
-          <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-5">
-            <Link href="/" className="flex items-center">
-              <Image
-                src="/images/logo-branco-transparente.png"
-                alt="Nexus Editora"
-                width={360}
-                height={152}
-                priority
-                className="h-24 w-auto sm:h-28"
-              />
-            </Link>
-            <nav className="flex items-center gap-6 text-sm font-medium tracking-wide text-branco/90">
-              <Link href="/" className="transition-colors hover:text-branco">
-                Página Inicial
-              </Link>
-              <Link
-                href="/catalogo"
-                className="transition-colors hover:text-branco"
-              >
-                Catálogo
-              </Link>
-              <Link
-                href="/sobre"
-                className="transition-colors hover:text-branco"
-              >
-                Sobre a Editora
-              </Link>
-            </nav>
-          </div>
-        </header>
+        <a
+          href="#conteudo"
+          className="sr-only focus:not-sr-only focus:absolute focus:left-2 focus:top-2 focus:z-50 focus:bg-branco focus:px-4 focus:py-2 focus:text-azul"
+        >
+          Ir para o conteúdo
+        </a>
+        <BarraAcessibilidade />
+        <Cabecalho />
 
-        <main className="flex-1">{children}</main>
+        <main id="conteudo" className="flex-1">
+          {children}
+        </main>
 
         <footer className="bg-azul-escuro">
-          <div className="mx-auto max-w-5xl px-6 py-10 text-center text-sm text-branco/70">
+          <div className="mx-auto max-w-6xl px-6 py-10 text-center text-sm text-branco/75">
+            <nav aria-label="Rodapé" className="mb-6 flex flex-wrap justify-center gap-x-6 gap-y-2">
+              <Link href="/catalogo" className="hover:text-branco">Catálogo</Link>
+              <Link href="/colecoes" className="hover:text-branco">Coleções</Link>
+              <Link href="/autores" className="hover:text-branco">Autores</Link>
+              <Link href="/como-publicar" className="hover:text-branco">Como publicar</Link>
+              <Link href="/termos" className="hover:text-branco">Termos de uso e direitos autorais</Link>
+            </nav>
             <p className="font-semibold text-branco">Nexus Editora</p>
             <p className="mt-1">Palmas, Tocantins, Brasil</p>
             <a
               href="mailto:nexus.palmas@gmail.com"
-              className="mt-1 inline-block text-branco/70 transition-colors hover:text-branco"
+              className="mt-1 inline-block transition-colors hover:text-branco"
             >
               nexus.palmas@gmail.com
             </a>
