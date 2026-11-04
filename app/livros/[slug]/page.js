@@ -129,9 +129,8 @@ export default async function PaginaLivro({ params }) {
                 href={
                   contadorAtivo
                     ? `/api/download?slug=${encodeURIComponent(livro.slug)}`
-                    : livro.arquivo_url
+                    : `${livro.arquivo_url}?baixar=1`
                 }
-                {...(contadorAtivo ? {} : { download: true })}
                 className="inline-block bg-azul px-6 py-3 text-sm font-medium tracking-wide text-branco transition-colors hover:bg-azul-escuro"
               >
                 Baixar PDF gratuitamente
