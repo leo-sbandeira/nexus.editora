@@ -8,7 +8,9 @@ import {
 import { buscarLivroPorSlug } from "@/lib/livros";
 import GradeLivros from "@/components/GradeLivros";
 import NumeroDestaque from "@/components/NumeroDestaque";
-import CampoBusca from "@/components/CampoBusca";
+import Carrossel from "@/components/Carrossel";
+import CardLancamento from "@/components/CardLancamento";
+import CardInstitucional from "@/components/CardInstitucional";
 import Secao from "@/components/Secao";
 
 // Os números do contador são atualizados a cada 5 minutos.
@@ -16,7 +18,7 @@ export const revalidate = 300;
 
 export default async function Home() {
   const [lancamentos, colecoes, todas, estatisticas] = await Promise.all([
-    listarLivros({ limite: 4 }),
+    listarLivros({ limite: 12 }),
     listarColecoes(),
     listarLivros(),
     carregarEstatisticas(),
@@ -30,20 +32,37 @@ export default async function Home() {
 
   return (
     <div>
-      <section className="bg-cinza-claro">
-        <div className="mx-auto max-w-6xl px-6 py-16">
-          <h1 className="max-w-2xl text-4xl font-semibold leading-tight text-azul sm:text-5xl">
-            Livros publicados, disponíveis a quem quiser lê-los.
-          </h1>
-          <p className="mt-5 max-w-md text-justify text-preto/70">
-            A Nexus Editora publica livros em PDF, gratuitos e sem cadastro.
-            Basta escolher um título e baixar.
-          </p>
-          <div className="mt-8">
-            <CampoBusca grande />
-          </div>
-        </div>
-      </section>
+      <Carrossel
+        titulo="Lançamentos"
+        verTodos={{ href: "/catalogo", rotulo: "Ver catálogo completo" }}
+      >
+        {lancamentos.map((livro) => (
+          <CardLancamento key={livro.id} livro={livro} />
+        ))}
+      </Carrossel>
+
+      <Carrossel
+        titulo="A Nexus Editora"
+        fundo="cinza"
+        larguraItem="w-[85%] sm:w-[48%] lg:w-[32%]"
+      >
+        <CardInstitucional
+          logo
+          titulo="Ciência, técnica e pesquisa em acesso aberto"
+          texto="A Nexus Editora publica obras científicas, técnicas e de divulgação, além de resultados de pesquisa, com a finalidade de ampliar a circulação do conhecimento produzido em instituições de ensino e pesquisa."
+          link={{ href: "/sobre", rotulo: "Conheça a editora" }}
+        />
+        <CardInstitucional
+          titulo="Livros gratuitos, sem cadastro"
+          texto="Os livros são publicados em PDF e podem ser lidos e baixados gratuitamente, sem necessidade de cadastro, com licença definida em acordo com os autores."
+          link={{ href: "/catalogo", rotulo: "Ver catálogo" }}
+        />
+        <CardInstitucional
+          titulo="Oito grandes áreas do conhecimento"
+          texto="A Editora recebe propostas de obras nas oito grandes áreas da CAPES, de Ciências Exatas e da Terra a Linguística, Letras e Artes."
+          link={{ href: "/como-publicar", rotulo: "Como publicar" }}
+        />
+      </Carrossel>
 
       {estatisticas && (
         <section className="bg-azul" aria-label="Números da editora">
@@ -54,20 +73,6 @@ export default async function Home() {
           </div>
         </section>
       )}
-
-      <Secao
-        titulo="Lançamentos"
-        verTodos={{ href: "/catalogo", rotulo: "Ver catálogo completo" }}
-      >
-        {lancamentos.length === 0 ? (
-          <p className="text-preto/60">
-            Nenhuma obra publicada ainda. Assim que forem cadastradas,
-            aparecerão aqui.
-          </p>
-        ) : (
-          <GradeLivros livros={lancamentos} />
-        )}
-      </Secao>
 
       {populares.length > 0 && (
         <Secao titulo="Mais baixados" fundo="cinza">
