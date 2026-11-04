@@ -1,14 +1,30 @@
 import Link from "next/link";
 import { listarLivros, listarColecoes } from "@/lib/livros";
+import {
+  carregarEstatisticas,
+  totaisGerais,
+  maisBaixadosSlugs,
+} from "@/lib/contador";
+import { buscarLivroPorSlug } from "@/lib/livros";
 import GradeLivros from "@/components/GradeLivros";
+import NumeroDestaque from "@/components/NumeroDestaque";
 import CampoBusca from "@/components/CampoBusca";
 import Secao from "@/components/Secao";
 
+// Os números do contador são atualizados a cada 5 minutos.
+export const revalidate = 300;
+
 export default async function Home() {
-  const [lancamentos, colecoes] = await Promise.all([
+  const [lancamentos, colecoes, todas, estatisticas] = await Promise.all([
     listarLivros({ limite: 4 }),
     listarColecoes(),
+    listarLivros(),
+    carregarEstatisticas(),
   ]);
+  const totais = totaisGerais(estatisticas);
+  const populares = (
+    await Promise.all(maisBaixadosSlugs(estatisticas, 4).map((slug) => buscarLivroPorSlug(slug)))
+  ).filter(Boolean);
 
   const colecoesComObras = colecoes.filter((c) => c.total > 0);
 
@@ -29,6 +45,16 @@ export default async function Home() {
         </div>
       </section>
 
+      {estatisticas && (
+        <section className="bg-azul" aria-label="Números da editora">
+          <div className="mx-auto grid max-w-6xl grid-cols-2 gap-6 px-6 py-8 sm:grid-cols-3">
+            <NumeroDestaque valor={todas.length} rotulo="obras publicadas" tema="escuro" />
+            <NumeroDestaque valor={totais.visualizacoes} rotulo="visualizações" tema="escuro" />
+            <NumeroDestaque valor={totais.downloads} rotulo="downloads" tema="escuro" />
+          </div>
+        </section>
+      )}
+
       <Secao
         titulo="Lançamentos"
         verTodos={{ href: "/catalogo", rotulo: "Ver catálogo completo" }}
@@ -42,6 +68,12 @@ export default async function Home() {
           <GradeLivros livros={lancamentos} />
         )}
       </Secao>
+
+      {populares.length > 0 && (
+        <Secao titulo="Mais baixados" fundo="cinza">
+          <GradeLivros livros={populares} />
+        </Secao>
+      )}
 
       {colecoesComObras.length > 0 && (
         <Secao

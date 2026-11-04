@@ -31,6 +31,22 @@ Não há banco de dados. O catálogo fica em arquivos do próprio repositório.
 4. Use `"publicado": false` para manter a obra como rascunho.
 5. Faça o commit. A Vercel publica sozinha.
 
+## Contador público (planilha do Google)
+
+Visualizações e downloads são registrados em uma planilha do Google, por um script
+(`contador/apps-script.gs`). O site mostra os totais na página inicial e em cada obra.
+Se as variáveis abaixo não existirem, o contador some do site.
+
+1. Crie uma planilha no Google Sheets e abra Extensões, Apps Script.
+2. Cole o conteúdo de `contador/apps-script.gs` e troque `TROQUE_POR_UMA_SENHA_LONGA` por uma senha.
+3. Implantar, Nova implantação, tipo App da Web: executar como **você**, acesso **qualquer pessoa**.
+4. Na Vercel, em Settings, Environment Variables, crie:
+   - `CONTADOR_URL`: a URL do app da Web (termina em `/exec`)
+   - `CONTADOR_TOKEN`: a mesma senha do script
+5. Faça um novo deploy.
+
+Cada evento vira uma linha na aba `eventos` da planilha. Os números do site são atualizados a cada 5 minutos.
+
 ## Rodar localmente
 
 ```bash

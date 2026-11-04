@@ -2,8 +2,20 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { buscarLivroPorSlug, livrosDaColecao, listarLivros } from "@/lib/livros";
+import {
+  contadorAtivo,
+  carregarEstatisticas,
+  totaisDaObra,
+  mensalDaObra,
+} from "@/lib/contador";
+import NumeroDestaque from "@/components/NumeroDestaque";
+import GraficoMensal from "@/components/GraficoMensal";
+import RegistrarVisualizacao from "@/components/RegistrarVisualizacao";
 import Citacao from "@/components/Citacao";
 import GradeLivros from "@/components/GradeLivros";
+
+// Os números do contador são atualizados a cada 5 minutos.
+export const revalidate = 300;
 
 export async function generateStaticParams() {
   const livros = await listarLivros();
@@ -54,11 +66,15 @@ export default async function PaginaLivro({ params }) {
   }
 
   const outras = livro.colecao_id ? await livrosDaColecao(livro.colecao_id, livro.id) : [];
+  const estatisticas = await carregarEstatisticas();
+  const totais = totaisDaObra(estatisticas, livro.slug);
+  const dadosMensais = mensalDaObra(estatisticas, livro.slug);
 
   const autores = livro.vinculos ?? [];
 
   return (
     <div>
+      <RegistrarVisualizacao slug={livro.slug} />
       <div className="mx-auto max-w-6xl px-6 py-14">
         <div className="grid gap-10 sm:grid-cols-[260px_1fr]">
           <div className="relative aspect-[3/4] w-full border border-cinza bg-cinza-claro">
@@ -110,8 +126,12 @@ export default async function PaginaLivro({ params }) {
 
             <div className="mt-7 flex flex-wrap gap-3">
               <a
-                href={livro.arquivo_url}
-                download
+                href={
+                  contadorAtivo
+                    ? `/api/download?slug=${encodeURIComponent(livro.slug)}`
+                    : livro.arquivo_url
+                }
+                {...(contadorAtivo ? {} : { download: true })}
                 className="inline-block bg-azul px-6 py-3 text-sm font-medium tracking-wide text-branco transition-colors hover:bg-azul-escuro"
               >
                 Baixar PDF gratuitamente
@@ -162,6 +182,22 @@ export default async function PaginaLivro({ params }) {
           </div>
         </div>
       </div>
+
+      {contadorAtivo && estatisticas && (
+        <section className="bg-cinza-claro">
+          <div className="mx-auto max-w-6xl px-6 py-12">
+            <div className="grid w-fit grid-cols-2 gap-8">
+              <NumeroDestaque valor={totais.visualizacoes} rotulo="visualizações" />
+              <NumeroDestaque valor={totais.downloads} rotulo="downloads" />
+            </div>
+
+            <h2 className="mt-10 text-xl font-semibold text-azul">Acessos por mês</h2>
+            <div className="mt-4">
+              <GraficoMensal dados={dadosMensais} />
+            </div>
+          </div>
+        </section>
+      )}
 
       {outras.length > 0 && (
         <section className="mx-auto max-w-6xl px-6 py-14">
