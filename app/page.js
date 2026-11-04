@@ -1,23 +1,13 @@
 import Link from "next/link";
-import {
-  listarLivros,
-  listarColecoes,
-  maisBaixados,
-  totaisGerais,
-} from "@/lib/livros";
+import { listarLivros, listarColecoes } from "@/lib/livros";
 import GradeLivros from "@/components/GradeLivros";
-import NumeroDestaque from "@/components/NumeroDestaque";
 import CampoBusca from "@/components/CampoBusca";
 import Secao from "@/components/Secao";
 
-export const revalidate = 0;
-
 export default async function Home() {
-  const [lancamentos, colecoes, populares, totais] = await Promise.all([
+  const [lancamentos, colecoes] = await Promise.all([
     listarLivros({ limite: 4 }),
     listarColecoes(),
-    maisBaixados(4),
-    totaisGerais(),
   ]);
 
   const colecoesComObras = colecoes.filter((c) => c.total > 0);
@@ -39,14 +29,6 @@ export default async function Home() {
         </div>
       </section>
 
-      <section className="bg-azul" aria-label="Números da editora">
-        <div className="mx-auto grid max-w-6xl grid-cols-2 gap-6 px-6 py-8 sm:grid-cols-3">
-          <NumeroDestaque valor={totais.obras} rotulo="obras publicadas" tema="escuro" />
-          <NumeroDestaque valor={totais.visualizacoes} rotulo="visualizações" tema="escuro" />
-          <NumeroDestaque valor={totais.downloads} rotulo="downloads" tema="escuro" />
-        </div>
-      </section>
-
       <Secao
         titulo="Lançamentos"
         verTodos={{ href: "/catalogo", rotulo: "Ver catálogo completo" }}
@@ -60,12 +42,6 @@ export default async function Home() {
           <GradeLivros livros={lancamentos} />
         )}
       </Secao>
-
-      {populares.length > 0 && (
-        <Secao titulo="Mais baixados" fundo="cinza">
-          <GradeLivros livros={populares} />
-        </Secao>
-      )}
 
       {colecoesComObras.length > 0 && (
         <Secao
