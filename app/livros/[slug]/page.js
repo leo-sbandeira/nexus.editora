@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { buscarLivroPorSlug, livrosDaColecao, listarLivros } from "@/lib/livros";
@@ -13,6 +12,7 @@ import GraficoMensal from "@/components/GraficoMensal";
 import RegistrarVisualizacao from "@/components/RegistrarVisualizacao";
 import Citacao from "@/components/Citacao";
 import GradeLivros from "@/components/GradeLivros";
+import CapaMockup from "@/components/CapaMockup";
 
 // Os números do contador são atualizados a cada 5 minutos.
 export const revalidate = 300;
@@ -77,20 +77,8 @@ export default async function PaginaLivro({ params }) {
       <RegistrarVisualizacao slug={livro.slug} />
       <div className="mx-auto max-w-6xl px-6 py-14">
         <div className="grid gap-10 sm:grid-cols-[260px_1fr]">
-          <div className="relative aspect-[3/4] w-full border border-cinza bg-cinza-claro">
-            {livro.capa_url ? (
-              <Image
-                src={livro.capa_url}
-                alt={`Capa de ${livro.titulo}`}
-                fill
-                sizes="260px"
-                className="object-cover"
-              />
-            ) : (
-              <div className="flex h-full items-center justify-center p-4 text-center text-sm font-medium text-preto/60">
-                {livro.titulo}
-              </div>
-            )}
+          <div className="group self-start">
+            <CapaMockup livro={livro} tamanho="g" sizes="260px" />
           </div>
 
           <div>

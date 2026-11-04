@@ -59,3 +59,12 @@ Abra http://localhost:3000.
 ## Domínio
 
 `nexuseditoradigital.com.br`, configurado em Project Settings, Domains, na Vercel.
+
+## Padrão das capas
+
+Toda capa de livro é exibida em mockup (lombada, sombra e páginas na lateral) pelo componente
+`components/CapaMockup.js`. Ao criar qualquer tela nova que mostre uma obra, use `CapaMockup`
+(ou os cartões `CardLivro` e `CardLancamento`, que já o utilizam) e não renderize `capa_url`
+diretamente. Para cadastrar uma obra nova, basta adicionar o item em `data/livros.json` e a capa
+em `public/capas/`: o mockup é aplicado automaticamente. Use a capa plana (frente), proporção
+aproximada 873 x 1242 px.
