@@ -1,19 +1,14 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import {
-  buscarLivroPorSlug,
-  contarTotais,
-  estatisticasMensais,
-  livrosDaColecao,
-  registrarVisualizacao,
-} from "@/lib/livros";
-import NumeroDestaque from "@/components/NumeroDestaque";
-import GraficoMensal from "@/components/GraficoMensal";
+import { buscarLivroPorSlug, livrosDaColecao, listarLivros } from "@/lib/livros";
 import Citacao from "@/components/Citacao";
 import GradeLivros from "@/components/GradeLivros";
 
-export const revalidate = 0;
+export async function generateStaticParams() {
+  const livros = await listarLivros();
+  return livros.map((l) => ({ slug: l.slug }));
+}
 
 export async function generateMetadata({ params }) {
   const livro = await buscarLivroPorSlug(params.slug);
@@ -58,14 +53,7 @@ export default async function PaginaLivro({ params }) {
     notFound();
   }
 
-  // Registra a visualização antes de calcular os totais exibidos na página.
-  await registrarVisualizacao(livro.id);
-
-  const [totais, dadosMensais, outras] = await Promise.all([
-    contarTotais(livro.id),
-    estatisticasMensais(livro.id),
-    livro.colecao_id ? livrosDaColecao(livro.colecao_id, livro.id) : [],
-  ]);
+  const outras = livro.colecao_id ? await livrosDaColecao(livro.colecao_id, livro.id) : [];
 
   const autores = livro.vinculos ?? [];
 
@@ -122,7 +110,8 @@ export default async function PaginaLivro({ params }) {
 
             <div className="mt-7 flex flex-wrap gap-3">
               <a
-                href={`/api/download?slug=${encodeURIComponent(livro.slug)}`}
+                href={livro.arquivo_url}
+                download
                 className="inline-block bg-azul px-6 py-3 text-sm font-medium tracking-wide text-branco transition-colors hover:bg-azul-escuro"
               >
                 Baixar PDF gratuitamente
@@ -173,20 +162,6 @@ export default async function PaginaLivro({ params }) {
           </div>
         </div>
       </div>
-
-      <section className="bg-cinza-claro">
-        <div className="mx-auto max-w-6xl px-6 py-12">
-          <div className="grid w-fit grid-cols-2 gap-8">
-            <NumeroDestaque valor={totais.visualizacoes} rotulo="visualizações" />
-            <NumeroDestaque valor={totais.downloads} rotulo="downloads" />
-          </div>
-
-          <h2 className="mt-10 text-xl font-semibold text-azul">Acessos por mês</h2>
-          <div className="mt-4">
-            <GraficoMensal dados={dadosMensais} />
-          </div>
-        </div>
-      </section>
 
       {outras.length > 0 && (
         <section className="mx-auto max-w-6xl px-6 py-14">

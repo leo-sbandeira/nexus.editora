@@ -3,8 +3,6 @@ import { buscarColecao, livrosDaColecao } from "@/lib/livros";
 import GradeLivros from "@/components/GradeLivros";
 import CabecalhoPagina from "@/components/CabecalhoPagina";
 
-export const revalidate = 0;
-
 export async function generateMetadata({ params }) {
   const colecao = await buscarColecao(params.slug);
   return { title: colecao ? colecao.nome : "Coleção" };

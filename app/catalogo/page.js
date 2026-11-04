@@ -3,8 +3,6 @@ import { listarLivros, listarColecoes, listarAnos } from "@/lib/livros";
 import GradeLivros from "@/components/GradeLivros";
 import CabecalhoPagina from "@/components/CabecalhoPagina";
 
-export const revalidate = 0;
-
 export const metadata = {
   title: "Catálogo",
 };

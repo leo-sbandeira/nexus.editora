@@ -2,8 +2,6 @@ import Link from "next/link";
 import { listarColecoes } from "@/lib/livros";
 import CabecalhoPagina from "@/components/CabecalhoPagina";
 
-export const revalidate = 0;
-
 export const metadata = {
   title: "Coleções",
 };

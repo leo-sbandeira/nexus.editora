@@ -3,8 +3,6 @@ import { buscarAutor } from "@/lib/livros";
 import GradeLivros from "@/components/GradeLivros";
 import CabecalhoPagina from "@/components/CabecalhoPagina";
 
-export const revalidate = 0;
-
 export async function generateMetadata({ params }) {
   const autor = await buscarAutor(params.slug);
   return { title: autor ? autor.nome : "Autor" };
