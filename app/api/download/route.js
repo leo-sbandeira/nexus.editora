@@ -15,5 +15,7 @@ export async function GET(request) {
   // O download nunca fica preso ao contador: se a planilha demorar, segue sem registrar.
   await registrar(livro.slug, "download", 2500);
 
-  return NextResponse.redirect(new URL(livro.arquivo_url, request.url));
+  const destino = new URL(livro.arquivo_url, request.url);
+  destino.searchParams.set("baixar", "1");
+  return NextResponse.redirect(destino);
 }
